@@ -2,6 +2,8 @@
 
 #include "hittable.h"
 #include "material.h"
+#include <vector>
+#include <atomic>
 
 class camera {
     public:
@@ -22,20 +24,43 @@ class camera {
         void render(const hittable& world){
             initialize();
 
-            std::cout << "P3\n" << img_w << ' ' << img_h << "\n255\n";
+            std::vector<colour> image_buffer(img_w * img_h);
 
+            std::atomic<int> completed_scanlines(0);
+            
+            std::clog << "Rendering...\n";
+
+            #pragma omp parallel for schedule(dynamic)
             for (int j = 0; j < img_h; j++){
-                std::clog << "\rScanlines remaining: " << (img_h - j) << ' ' << std::flush;
+                colour pixel_colour(0,0,0);
                 for (int i = 0; i < img_w; i++){
                     colour pixel_colour(0,0,0);
                     for (int sample = 0; sample < samples_per_pixel; sample++){
                         ray r = get_ray(i,j);
                         pixel_colour += ray_colour(r, max_depth, world);
                     }
-                    write_colour(std::cout, pixel_samples_scale * pixel_colour);
+                    int pixel_index = j * img_w + i;
+                    image_buffer[pixel_index] = pixel_samples_scale * pixel_colour;
+                }
+
+                int lines_done = ++completed_scanlines;
+
+                if (lines_done % 5 == 0 || lines_done == img_h) {
+                    #pragma omp critical
+                    {
+                        std::clog << "\rProgress: " << lines_done << " / " << img_h << " scanlines (" << (lines_done * 100 / img_h) << "%)" << std::flush;
+                    }
                 }
             }
-            std::clog << "\rDone.   \n";
+            std::clog << "\rDone rendering. Writing to file...\n";
+
+            std::cout << "P3\n" << img_w << ' ' << img_h << "\n255\n";
+
+            for (const auto& pixel : image_buffer) {
+                write_colour(std::cout, pixel);
+            }
+
+            std::clog << "Complete.\n";
         }
 
     private:
