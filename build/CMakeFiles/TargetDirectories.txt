@@ -1,3 +1,0 @@
-/home/alill/Coding/3D Renderer/build/CMakeFiles/Renderer.dir
-/home/alill/Coding/3D Renderer/build/CMakeFiles/edit_cache.dir
-/home/alill/Coding/3D Renderer/build/CMakeFiles/rebuild_cache.dir

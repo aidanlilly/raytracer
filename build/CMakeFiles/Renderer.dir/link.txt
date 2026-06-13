@@ -1,1 +1,0 @@
-/usr/bin/c++ -Wl,--dependency-file=CMakeFiles/Renderer.dir/link.d CMakeFiles/Renderer.dir/main.cpp.o -o Renderer
