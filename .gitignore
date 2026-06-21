@@ -1,29 +1,22 @@
-# Ignore build directory and typical CMake outputs
-build/
-CMakeFiles/
+# Ignore CMake build directories completely
+/build/
+/build-mingw/
+/.cmake/
 CMakeCache.txt
-cmake_install.cmake
+CMakeFiles/
 Makefile
+cmake_install.cmake
 
-# Ignore generated images and binaries
-*.ppm
-Renderer
+# Ignore local IDE settings
+/.vs/
+/.vscode/
+/*.user
 
-# Object files and compiled libraries
+# Ignore compiled executables (Windows/Linux/Mac defaults)
+*.exe
+*.out
+*.app
 *.o
+*.obj
 *.a
-*.so
-*.dylib
-
-# Editor temporary files
-*~
-# Vim swap files
-.swp
-# VSCode
-.vscode/
-
-# macOS
-.DS_Store
-
-# Logs
-*.log
+*.lib
