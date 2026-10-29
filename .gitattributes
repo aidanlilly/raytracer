@@ -1,1 +1,3 @@
 src/glad.c linguist-vendored
+include/glad/** linguist-vendored
+include/KHR/** linguist-vendored

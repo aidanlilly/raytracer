@@ -26,6 +26,26 @@ int main() {
     auto material3 = make_shared<metal>(colour(0.7, 0.6, 0.5), 0.0);
     world.add(make_shared<sphere>(point3(4, 1, 0), 1.0, material3));
 
+    // Small, varied spheres scattered around the original three focal spheres.
+    auto brass = make_shared<metal>(colour(0.82, 0.55, 0.18), 0.08);
+    auto teal = make_shared<lambertian>(colour(0.08, 0.42, 0.40));
+    auto rose_glass = make_shared<dielectric>(1.33);
+    auto lilac = make_shared<lambertian>(colour(0.48, 0.22, 0.62));
+    auto jade_metal = make_shared<metal>(colour(0.12, 0.62, 0.38), 0.16);
+    auto sky_glass = make_shared<dielectric>(1.65);
+
+    world.add(make_shared<sphere>(point3(-6.3, 0.34, -1.0), 0.34, brass));
+    world.add(make_shared<sphere>(point3(-5.4, 0.52, 1.8), 0.52, teal));
+    world.add(make_shared<sphere>(point3(-3.2, 0.24, 2.3), 0.24, rose_glass));
+    world.add(make_shared<sphere>(point3(-1.8, 0.42, -2.2), 0.42, lilac));
+    world.add(make_shared<sphere>(point3(-0.8, 0.28, 2.7), 0.28, jade_metal));
+    world.add(make_shared<sphere>(point3(1.3, 0.36, -2.6), 0.36, sky_glass));
+    world.add(make_shared<sphere>(point3(2.7, 0.25, 2.4), 0.25, brass));
+    world.add(make_shared<sphere>(point3(4.9, 0.48, 1.8), 0.48, teal));
+    world.add(make_shared<sphere>(point3(6.1, 0.30, -1.4), 0.30, rose_glass));
+    world.add(make_shared<sphere>(point3(-7.0, 0.20, 0.8), 0.20, jade_metal));
+    world.add(make_shared<sphere>(point3(0.0, 0.19, -3.4), 0.19, brass));
+
     world = hittable_list(make_shared<bvh_node>(world));
 
     camera cam;
